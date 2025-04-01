@@ -2,3 +2,10 @@ nmap
 net-tools
 htop
 curl
+git
+traceroute
+tcpdump
+fail2ban
+iperf
+sudo
+zip
