@@ -8,6 +8,11 @@ CONFIG_DIR="./config"
 PACKAGE_LIST="./lists/packages.txt"
 USERNAME=$(logname)
 USER_HOME="/home/$USERNAME"
+HOSTNAME=$(hostname)
+DATE=$(date)
+UPTIME=$(uptime -p)
+DISK_USAGE=$(df -h / | awk 'NR==2 {print $5}')
+LOAD=$(uptime | awk -F'load average:' '{ print $2 }')
 
 # === FUNCTIONS ===
 log() {
@@ -69,6 +74,16 @@ if [ -f "$CONFIG_DIR/motd.txt" ]; then
 else
   log "motd.txt not found."
 fi
+
+# Créer un message personnalisé
+echo "===================================================" > /etc/motd
+echo "    Bienvenue sur le serveur $HOSTNAME" >> /etc/motd
+echo "===================================================" >> /etc/motd
+echo "Dernière connexion : $DATE" >> /etc/motd
+echo "Temps d'activité : $UPTIME" >> /etc/motd
+echo "Utilisation du disque : $DISK_USAGE" >> /etc/motd
+echo "Charge moyenne : $LOAD" >> /etc/motd
+echo "===================================================" >> /etc/motd
 
 # === 4. CUSTOM .bashrc ===
 if [ -f "$CONFIG_DIR/bashrc.append" ]; then
